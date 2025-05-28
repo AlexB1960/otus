@@ -6,7 +6,6 @@ import homework2.data.ColorData;
 import homework2.data.MenuData;
 import homework2.factory.AnimalFactory;
 import homework2.tools.IntegerValidator;
-
 import java.util.*;
 
 public class AnimalMain {
@@ -106,7 +105,6 @@ public class AnimalMain {
                 }
             }
         } while (menuCommand != MenuData.EXIT);
-
     }
 
     private static int getAnimalWeightAge(String promptMessage, String errorMessage) {
