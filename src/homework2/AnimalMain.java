@@ -10,12 +10,10 @@ import homework2.tools.IntegerValidator;
 import java.util.*;
 
 public class AnimalMain {
-
     private static Scanner scanner = new Scanner(System.in);
     private static IntegerValidator integerValidator = new IntegerValidator();
 
     public static void main(String... args) {
-
         List<AbsAnimal> animal = new ArrayList<>();
         String consoleCommand = "";
         String consoleAnimal = "";
@@ -96,24 +94,17 @@ public class AnimalMain {
 
                     } while(!animalsColor.contains(consoleColor));
 
-                    animal.add(new AnimalFactory().createAnimal(animalTypeCommand));
-                    animal.getLast().setName(consoleName);
-                    animal.getLast().setAge(consoleAge);
-                    animal.getLast().setWeight(consoleWeight);
-                    animal.getLast().setColor(colorData);
+                    animal.add(new AnimalFactory(consoleName, consoleAge, consoleWeight,
+                            colorData).createAnimal(animalTypeCommand));
                     animal.getLast().say();
-
                 } else if (menuCommand.equals(MenuData.LIST)) {
                     for (AbsAnimal any: animal) {
                         System.out.println(any.toString());
                     }
-
                 } else if (menuCommand.equals(MenuData.EXIT)) {
                     System.out.println("Пока");
                 }
-
             }
-
         } while (menuCommand != MenuData.EXIT);
 
     }

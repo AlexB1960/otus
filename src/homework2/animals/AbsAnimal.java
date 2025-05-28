@@ -8,6 +8,13 @@ public abstract class AbsAnimal {
     private int weight;
     private ColorData color;
 
+    public AbsAnimal(String name, int age, int weight, ColorData colorData) {
+        this.name = name;
+        this.age = age;
+        this.weight = weight;
+        this.color = colorData;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
