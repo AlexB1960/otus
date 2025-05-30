@@ -33,7 +33,7 @@ public class AnimalFactory {
             }
             case null, default: {
                 throw new RuntimeException(String.format("Animaal %s is not supported",
-                        animalTypeData.name().toLowerCase()));
+                                           animalTypeData.name().toLowerCase()));
             }
         }
     }

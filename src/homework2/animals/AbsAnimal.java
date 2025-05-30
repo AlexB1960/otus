@@ -73,14 +73,13 @@ public abstract class AbsAnimal {
         String yearsString = "лет";
         int lastDigit = age % 10;
 
-        if (age > 4 & age < 21) {
+        if ((age > 4) && (age < 21)) {
             yearsString = "лет";
         } else if (lastDigit == 1) {
             yearsString = "год";
-        } else if (lastDigit >= 2 && lastDigit <= 4) {
+        } else if ((lastDigit >= 2) && (lastDigit <= 4)) {
             yearsString = "года";
         }
-
         return yearsString;
     }
 
