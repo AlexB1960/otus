@@ -1,11 +1,15 @@
 package homework2;
 
 import homework2.animals.AbsAnimal;
+import homework2.dao.AbsTable;
+import homework2.dao.AnimalTable;
 import homework2.data.AnimalTypeData;
 import homework2.data.ColorData;
 import homework2.data.MenuData;
 import homework2.factory.AnimalFactory;
 import homework2.tools.IntegerValidator;
+
+import java.sql.SQLException;
 import java.util.*;
 
 public class AnimalMain {
@@ -14,6 +18,9 @@ public class AnimalMain {
 
     public static void main(String... args) {
         List<AbsAnimal> animal = new ArrayList<>();
+        //подключка к БД и загрузка данных в лист
+        AnimalTable animalTable = new AnimalTable();
+        animal = animalTable.findAll();
 
         List<String> menuNames = new ArrayList<>();
         for (MenuData menuData: MenuData.values()) {
@@ -103,6 +110,12 @@ public class AnimalMain {
                 }
             }
         } while (menuCommand != MenuData.EXIT);
+
+        try {
+            ConnectionManager.getInstance().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static int getAnimalWeightAge(String promptMessage, String errorMessage) {
