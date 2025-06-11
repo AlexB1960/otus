@@ -81,4 +81,40 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
         }
     }
 
+    public void updateAnimal(AbsAnimal absAnimal) {
+        String sqlUpdate = "UPDATE " + tableName + " SET name='" + absAnimal.getName() + "',"
+                + " type='" + absAnimal.getType() + "', age=" + absAnimal.getAge() + ", weight="
+                + absAnimal.getWeight() + ", color='" + absAnimal.getColor().name().toLowerCase() + "', " +
+                "WHERE id=" + absAnimal.getId();
+        try {
+            ConnectionManager.getInstance().executeUpdate(sqlUpdate);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<AbsAnimal> findFilter(String filterType) {
+        List<AbsAnimal> animals = new ArrayList<>();
+        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM " + tableName
+                + " WHERE type='" + filterType + "'")) {
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String name = rs.getString("name");
+                String type = rs.getString("type");
+                int age = rs.getInt("age");
+                int weight = rs.getInt("weight");
+                String color = rs.getString("color");
+
+                ColorData colorData = ColorData.valueOf(color.toUpperCase());
+                AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(type.toUpperCase());
+
+                animals.add(new AnimalFactory(id, name, type, age, weight,
+                        colorData).createAnimal(animalTypeCommand));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return animals;
+    }
+
 }

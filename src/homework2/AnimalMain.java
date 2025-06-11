@@ -115,6 +115,38 @@ public class AnimalMain {
                         System.out.println(any.toString());
                     }
                     System.out.println();
+
+                } else if (menuCommand.equals(MenuData.EDIT)) {
+                    int consoleID = getAnimalWeightAge("Введите ID животного:",
+                            "ID должен быть положительным целым числом!");
+                    Long searchID = (long) consoleID;
+                    AbsAnimal animalEdit = animalTable.findById(searchID);
+                    if (animalEdit != null) {
+                        System.out.println(animalEdit.toString());
+
+
+
+
+                    } else {
+                        System.out.println("Нет такого ID !");
+                    }
+
+                } else if (menuCommand.equals(MenuData.FILTER)) {
+                    System.out.printf("Введите нужный тип животного для фильтра - %s:\n",
+                            String.join("/", animalTypeNames));
+                    consoleAnimal = scanner.next().trim().toLowerCase();
+
+                    if (!animalTypeNames.contains(consoleAnimal)) {
+                        System.out.println("Нет такого типа животного.");
+                    } else {
+                        animal = animalTable.findFilter(consoleAnimal);
+                        for (AbsAnimal any: animal) {
+                            System.out.println(any.toString());
+                        }
+                        System.out.println();
+                        //animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
+                    }
+
                 } else if (menuCommand.equals(MenuData.EXIT)) {
                     System.out.println("Пока");
                 }

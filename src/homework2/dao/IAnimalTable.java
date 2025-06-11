@@ -8,4 +8,6 @@ public interface IAnimalTable {
     List<AbsAnimal> findAll();
     AbsAnimal findById(Long searchId);
     void addNewAnimal(AbsAnimal absAnimal);
+    void updateAnimal(AbsAnimal absAnimal);
+    List<AbsAnimal> findFilter(String filterType);
 }

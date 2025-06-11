@@ -35,6 +35,10 @@ public abstract class AbsAnimal {
         this.color = color;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
     public String getName() {
         return this.name;
     }
