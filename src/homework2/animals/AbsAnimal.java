@@ -3,13 +3,17 @@ package homework2.animals;
 import homework2.data.ColorData;
 
 public abstract class AbsAnimal {
+    private long id;
     private String name;
+    private String type;
     private int age;
     private int weight;
     private ColorData color;
 
-    public AbsAnimal(String name, int age, int weight, ColorData colorData) {
+    public AbsAnimal(long id, String name, String type, int age, int weight, ColorData colorData) {
+        this.id = id;
         this.name = name;
+        this.type = type;
         this.age = age;
         this.weight = weight;
         this.color = colorData;
@@ -33,6 +37,10 @@ public abstract class AbsAnimal {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public int getAge() {
@@ -65,8 +73,8 @@ public abstract class AbsAnimal {
 
     @Override
     public String toString() {
-        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
-                this.name, this.age, ageString(this.age), this.weight, this.color.getName().toLowerCase());
+        return String.format("ID=%s Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
+                this.id, this.name, this.age, ageString(this.age), this.weight, this.color.getName().toLowerCase());
     }
 
     public String ageString(int age) {

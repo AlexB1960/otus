@@ -18,6 +18,7 @@ public class AnimalMain {
 
     public static void main(String... args) {
         List<AbsAnimal> animal = new ArrayList<>();
+        //AbsAnimal newAnimal = null;
         //подключка к БД и загрузка данных в лист
         AnimalTable animalTable = new AnimalTable();
         animal = animalTable.findAll();
@@ -97,14 +98,23 @@ public class AnimalMain {
 
                     } while (!animalsColor.contains(consoleColor));
 
-                    animal.add(new AnimalFactory(consoleName, consoleAge, consoleWeight,
+                    AbsAnimal newAnimal = new AnimalFactory(-1, consoleName, consoleAnimal,
+                            consoleAge, consoleWeight, colorData).createAnimal(animalTypeCommand);
+
+                    animalTable.addNewAnimal(newAnimal);
+                    newAnimal.say();
+
+
+                    /*animal.add(new AnimalFactory(-1, consoleName, consoleAnimal, consoleAge, consoleWeight,
                                                  colorData).createAnimal(animalTypeCommand));
-                    animal.getLast().say();
+                    animal.getLast().say();*/
 
                 } else if (menuCommand.equals(MenuData.LIST)) {
+                    animal = animalTable.findAll();
                     for (AbsAnimal any: animal) {
                         System.out.println(any.toString());
                     }
+                    System.out.println();
                 } else if (menuCommand.equals(MenuData.EXIT)) {
                     System.out.println("Пока");
                 }

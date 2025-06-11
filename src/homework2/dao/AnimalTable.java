@@ -36,7 +36,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
                 ColorData colorData = ColorData.valueOf(color.toUpperCase());
                 AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(type.toUpperCase());
 
-                animals.add(new AnimalFactory(name, age, weight,
+                animals.add(new AnimalFactory(id, name, type, age, weight,
                         colorData).createAnimal(animalTypeCommand));
             }
         } catch (Exception e) {
@@ -60,13 +60,25 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
                 ColorData colorData = ColorData.valueOf(color.toUpperCase());
                 AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(type.toUpperCase());
 
-                animalFind = new AnimalFactory(name, age, weight,
+                animalFind = new AnimalFactory(id, name, type, age, weight,
                         colorData).createAnimal(animalTypeCommand);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return animalFind;
+    }
+
+    public void addNewAnimal(AbsAnimal absAnimal) {
+        String sqlUpdate = "INSERT INTO " + tableName
+                + " (name, type, age, weight, color) VALUES ('" + absAnimal.getName() + "', '"
+                + absAnimal.getType() + "', " + absAnimal.getAge() + ", " + absAnimal.getWeight()
+                + ", '" + absAnimal.getColor().name().toLowerCase() + "')";
+        try {
+            ConnectionManager.getInstance().executeUpdate(sqlUpdate);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
