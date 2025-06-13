@@ -21,7 +21,7 @@ public class AnimalMain {
         //AbsAnimal newAnimal = null;
         //подключка к БД и загрузка данных в лист
         AnimalTable animalTable = new AnimalTable();
-        animal = animalTable.findAll();
+        //animal = animalTable.findAll();
 
         List<String> menuNames = new ArrayList<>();
         for (MenuData menuData: MenuData.values()) {
@@ -43,34 +43,13 @@ public class AnimalMain {
                     animalTypeNames.add(animalTypeData.name().toLowerCase());
                 }
 
-                AnimalTypeData animalTypeCommand = null;
-                String consoleAnimal = "";
+                //String consoleAnimal = "";
+                //AnimalTypeData animalTypeCommand = null;
                 if (menuCommand.equals(MenuData.ADD)) {
-                    do {
-                        System.out.printf("Введите нужный тип животного - %s:\n",
-                                          String.join("/", animalTypeNames));
-                        consoleAnimal = scanner.next().trim().toLowerCase();
+                    String consoleAnimal = inputConsoleAnimal(animalTypeNames);
+                    AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
 
-                        if (!animalTypeNames.contains(consoleAnimal)) {
-                            System.out.println("Нет такого типа животного.");
-                        } else {
-                            animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
-                        }
-
-                    } while (!animalTypeNames.contains(consoleAnimal));
-
-                    String consoleName = "";
-                    do {
-                        System.out.println("Введите имя животного:");
-                        consoleName = scanner.next().trim();
-                        consoleName = consoleName.substring(0,1).toUpperCase()
-                                      + consoleName.substring(1).toLowerCase();
-
-                        if (consoleName.isEmpty()) {
-                            System.out.println("Имя животного не должно быть пустым!");
-                        }
-
-                    } while (consoleName.isEmpty());
+                    String consoleName = inputConsoleName();
 
                     int consoleAge = getAnimalWeightAge("Введите возраст животного в годах:",
                             "Возраст должен быть положительным целым числом!");
@@ -78,36 +57,13 @@ public class AnimalMain {
                     int consoleWeight = getAnimalWeightAge("Введите вес животного в кг.:",
                             "Вес должен быть положительным целым числом!");
 
-                    List<String> animalsColor = new ArrayList<>();
-                    for (ColorData colorData: ColorData.values()) {
-                        animalsColor.add(colorData.name().toLowerCase());
-                    }
+                    ColorData colorData = inputColorData();
 
-                    ColorData colorData = null;
-                    String consoleColor = "";
-                    do {
-                        System.out.printf("Введите цвет окраса животного: %s\n",
-                                          String.join("/", animalsColor));
-                        consoleColor = scanner.next().trim().toLowerCase();
-
-                        if (!animalsColor.contains(consoleColor)) {
-                            System.out.println("Нет такого цвета окраса животного.");
-                        } else {
-                            colorData = ColorData.valueOf(consoleColor.toUpperCase());
-                        }
-
-                    } while (!animalsColor.contains(consoleColor));
 
                     AbsAnimal newAnimal = new AnimalFactory(-1, consoleName, consoleAnimal,
                             consoleAge, consoleWeight, colorData).createAnimal(animalTypeCommand);
-
                     animalTable.addNewAnimal(newAnimal);
                     newAnimal.say();
-
-
-                    /*animal.add(new AnimalFactory(-1, consoleName, consoleAnimal, consoleAge, consoleWeight,
-                                                 colorData).createAnimal(animalTypeCommand));
-                    animal.getLast().say();*/
 
                 } else if (menuCommand.equals(MenuData.LIST)) {
                     animal = animalTable.findAll();
@@ -124,8 +80,21 @@ public class AnimalMain {
                     if (animalEdit != null) {
                         System.out.println(animalEdit.toString());
 
+                        //String consoleAnimal = inputConsoleAnimal(animalTypeNames);
+                        //AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
+                        animalEdit.setType(inputConsoleAnimal(animalTypeNames));
 
+                        animalEdit.setName(inputConsoleName());
 
+                        animalEdit.setAge(getAnimalWeightAge("Введите возраст животного в годах:",
+                                "Возраст должен быть положительным целым числом!"));
+
+                        animalEdit.setWeight(getAnimalWeightAge("Введите вес животного в кг.:",
+                                "Вес должен быть положительным целым числом!"));
+
+                        animalEdit.setColor(inputColorData());
+
+                        animalTable.updateAnimal(animalEdit);
 
                     } else {
                         System.out.println("Нет такого ID !");
@@ -134,7 +103,7 @@ public class AnimalMain {
                 } else if (menuCommand.equals(MenuData.FILTER)) {
                     System.out.printf("Введите нужный тип животного для фильтра - %s:\n",
                             String.join("/", animalTypeNames));
-                    consoleAnimal = scanner.next().trim().toLowerCase();
+                    String consoleAnimal = scanner.next().trim().toLowerCase();
 
                     if (!animalTypeNames.contains(consoleAnimal)) {
                         System.out.println("Нет такого типа животного.");
@@ -174,6 +143,59 @@ public class AnimalMain {
             }
         } while (!integerValidator.isInteger(consoleAgeWeight));
         return animalAgeWeight;
+    }
+
+    private static String inputConsoleAnimal(List<String> animalTypeNames) {
+        String consoleAnimal = null;
+        do {
+            System.out.printf("Введите нужный тип животного - %s:\n",
+                    String.join("/", animalTypeNames));
+            consoleAnimal = scanner.next().trim().toLowerCase();
+
+            if (!animalTypeNames.contains(consoleAnimal)) {
+                System.out.println("Нет такого типа животного.");
+            } else {
+                //animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
+            }
+        } while (!animalTypeNames.contains(consoleAnimal));
+        return consoleAnimal;
+    }
+
+    private static String inputConsoleName() {
+        String consoleName;
+        do {
+            System.out.println("Введите имя животного:");
+            consoleName = scanner.next().trim();
+            consoleName = consoleName.substring(0,1).toUpperCase()
+                    + consoleName.substring(1).toLowerCase();
+
+            if (consoleName.isEmpty()) {
+                System.out.println("Имя животного не должно быть пустым!");
+            }
+        } while (consoleName.isEmpty());
+        return consoleName;
+    }
+
+    private static ColorData inputColorData() {
+        List<String> animalsColor = new ArrayList<>();
+        for (ColorData colorData: ColorData.values()) {
+            animalsColor.add(colorData.name().toLowerCase());
+        }
+
+        String consoleColor = "";
+        ColorData colorData = null;
+        do {
+            System.out.printf("Введите цвет окраса животного: %s\n",
+                    String.join("/", animalsColor));
+            consoleColor = scanner.next().trim().toLowerCase();
+
+            if (!animalsColor.contains(consoleColor)) {
+                System.out.println("Нет такого цвета окраса животного.");
+            } else {
+                colorData = ColorData.valueOf(consoleColor.toUpperCase());
+            }
+        } while (!animalsColor.contains(consoleColor));
+        return colorData;
     }
 
 }

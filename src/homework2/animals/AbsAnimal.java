@@ -23,6 +23,10 @@ public abstract class AbsAnimal {
         this.name = name;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public void setAge(int age) {
         this.age = age;
     }

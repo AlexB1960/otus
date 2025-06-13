@@ -24,7 +24,8 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public List<AbsAnimal> findAll() {
         List<AbsAnimal> animals = new ArrayList<>();
-        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM " + tableName)) {
+        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM "
+                                                                         + tableName)) {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
@@ -47,8 +48,8 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public AbsAnimal findById(Long searchId) {
         AbsAnimal animalFind = null;
-        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM " + tableName
-                                                                        + " WHERE id=" + searchId)) {
+        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM "
+                            + tableName + " WHERE id=" + searchId)) {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
@@ -84,8 +85,8 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
     public void updateAnimal(AbsAnimal absAnimal) {
         String sqlUpdate = "UPDATE " + tableName + " SET name='" + absAnimal.getName() + "',"
                 + " type='" + absAnimal.getType() + "', age=" + absAnimal.getAge() + ", weight="
-                + absAnimal.getWeight() + ", color='" + absAnimal.getColor().name().toLowerCase() + "', " +
-                "WHERE id=" + absAnimal.getId();
+                + absAnimal.getWeight() + ", color='" + absAnimal.getColor().name().toLowerCase()
+                + "' WHERE id=" + absAnimal.getId();
         try {
             ConnectionManager.getInstance().executeUpdate(sqlUpdate);
         } catch (Exception e) {
@@ -95,8 +96,8 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public List<AbsAnimal> findFilter(String filterType) {
         List<AbsAnimal> animals = new ArrayList<>();
-        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM " + tableName
-                + " WHERE type='" + filterType + "'")) {
+        try (ResultSet rs = ConnectionManager.getInstance().executeQuery("SELECT * FROM "
+                            + tableName + " WHERE type='" + filterType + "'")) {
             while (rs.next()) {
                 long id = rs.getLong("id");
                 String name = rs.getString("name");
