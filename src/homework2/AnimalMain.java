@@ -1,7 +1,7 @@
 package homework2;
 
 import homework2.animals.AbsAnimal;
-import homework2.dao.AbsTable;
+import homework2.connector.MySqlConnector;
 import homework2.dao.AnimalTable;
 import homework2.data.AnimalTypeData;
 import homework2.data.ColorData;
@@ -59,7 +59,6 @@ public class AnimalMain {
 
                     ColorData colorData = inputColorData();
 
-
                     AbsAnimal newAnimal = new AnimalFactory(-1, consoleName, consoleAnimal,
                             consoleAge, consoleWeight, colorData).createAnimal(animalTypeCommand);
                     animalTable.addNewAnimal(newAnimal);
@@ -76,28 +75,28 @@ public class AnimalMain {
                     int consoleID = getAnimalWeightAge("Введите ID животного:",
                             "ID должен быть положительным целым числом!");
                     Long searchID = (long) consoleID;
-                    AbsAnimal animalEdit = animalTable.findById(searchID);
-                    if (animalEdit != null) {
-                        System.out.println(animalEdit.toString());
+                    AbsAnimal editAnimal = animalTable.findById(searchID);
+                    if (editAnimal != null) {
+                        System.out.println(editAnimal.toString());
 
                         //String consoleAnimal = inputConsoleAnimal(animalTypeNames);
                         //AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
-                        animalEdit.setType(inputConsoleAnimal(animalTypeNames));
+                        editAnimal.setType(inputConsoleAnimal(animalTypeNames));
 
-                        animalEdit.setName(inputConsoleName());
+                        editAnimal.setName(inputConsoleName());
 
-                        animalEdit.setAge(getAnimalWeightAge("Введите возраст животного в годах:",
+                        editAnimal.setAge(getAnimalWeightAge("Введите возраст животного в годах:",
                                 "Возраст должен быть положительным целым числом!"));
 
-                        animalEdit.setWeight(getAnimalWeightAge("Введите вес животного в кг.:",
+                        editAnimal.setWeight(getAnimalWeightAge("Введите вес животного в кг.:",
                                 "Вес должен быть положительным целым числом!"));
 
-                        animalEdit.setColor(inputColorData());
+                        editAnimal.setColor(inputColorData());
 
-                        animalTable.updateAnimal(animalEdit);
+                        animalTable.updateAnimal(editAnimal);
 
                     } else {
-                        System.out.println("Нет такого ID !");
+                        System.out.println("Нет животного с таким ID !");
                     }
 
                 } else if (menuCommand.equals(MenuData.FILTER)) {
@@ -123,7 +122,7 @@ public class AnimalMain {
         } while (menuCommand != MenuData.EXIT);
 
         try {
-            ConnectionManager.getInstance().close();
+            MySqlConnector.getInstance().close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

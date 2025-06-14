@@ -1,19 +1,19 @@
-package homework2;
+package homework2.connector;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class ConnectionManager {
+public class MySqlConnector implements IDBConnector {
     private final Properties prop = new Properties();
-    private final InputStream stream = ClassLoader.getSystemResourceAsStream("SQLSettings.properties");
+    private final InputStream stream = ClassLoader.getSystemResourceAsStream("homework2/resources/DBSettings.properties");
 
     private Connection connection;
     private Statement statement;
-    private static ConnectionManager instance;
+    private static MySqlConnector instance;
 
-    private ConnectionManager() {
+    private MySqlConnector() {
         try {
             prop.load(stream);
         } catch (IOException e) {
@@ -36,9 +36,9 @@ public class ConnectionManager {
         }
     }
 
-    public static ConnectionManager getInstance() {
+    public static MySqlConnector getInstance() {
         if (instance == null) {
-            instance = new ConnectionManager();
+            instance = new MySqlConnector();
         }
         return instance;
     }

@@ -81,8 +81,9 @@ public abstract class AbsAnimal {
 
     @Override
     public String toString() {
-        return String.format("ID=%s Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
-                this.id, this.name, this.age, ageString(this.age), this.weight, this.color.getName().toLowerCase());
+        return String.format("ID=%s %s Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
+                this.id, this.type, this.name, this.age, ageString(this.age), this.weight,
+                this.color.getName().toLowerCase());
     }
 
     public String ageString(int age) {
