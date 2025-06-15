@@ -1,12 +1,51 @@
 package homework2.connector;
 
+import homework2.settings.ISettings;
+import homework2.settings.PropertiesSettings;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.Map;
 import java.util.Properties;
 
 public class MySqlConnector implements IDBConnector {
-    private final Properties prop = new Properties();
+
+    private Map<String, String> dbSettings = null;
+    private static Connection connection = null;
+    private static Statement statement = null;
+    private static MySqlConnector instance;
+
+    public MySqlConnector() throws SQLException, IOException {
+        dbSettings = new PropertiesSettings().getSettings("DBSettings.properties");
+        connect();
+    }
+
+    private void connect() throws SQLException {
+        if (connection == null) {
+            connection = DriverManager.getConnection(
+                    this.dbSettings.get("url"),
+                    this.dbSettings.get("username"),
+                    this.dbSettings.get("password")
+            );
+        }
+        if (statement == null) {
+            statement = connection.createStatement();
+        }
+    }
+
+    public void close() throws SQLException {
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
+
+
+
+    /*private final Properties prop = new Properties();
     private final InputStream stream = ClassLoader.getSystemResourceAsStream("homework2/resources/DBSettings.properties");
 
     private Connection connection;
@@ -34,9 +73,9 @@ public class MySqlConnector implements IDBConnector {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
-    public static MySqlConnector getInstance() {
+    public static MySqlConnector getInstance() throws SQLException, IOException {
         if (instance == null) {
             instance = new MySqlConnector();
         }
@@ -55,9 +94,9 @@ public class MySqlConnector implements IDBConnector {
         statement.execute(query);
     }
 
-    public void close() throws SQLException {
+   /* public void close() throws SQLException {
         statement.close();
         connection.close();
-    }
+    }*/
 
 }

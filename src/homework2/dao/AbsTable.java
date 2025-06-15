@@ -2,6 +2,7 @@ package homework2.dao;
 
 import homework2.connector.MySqlConnector;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public abstract class AbsTable {
         String sqlRequest = String.format("CREATE TABLE IF NOT EXISTS %s (%s)", this.tableName, convertMapColumnsToString());
         try {
             MySqlConnector.getInstance().execute(sqlRequest);
-        } catch (SQLException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

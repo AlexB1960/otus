@@ -9,6 +9,7 @@ import homework2.data.MenuData;
 import homework2.factory.AnimalFactory;
 import homework2.tools.IntegerValidator;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -123,7 +124,7 @@ public class AnimalMain {
 
         try {
             MySqlConnector.getInstance().close();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
