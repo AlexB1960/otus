@@ -37,7 +37,7 @@ public class AnimalFactory {
                 return new Duck(id, name, type, age, weight, color);
             }
             case null, default: {
-                throw new RuntimeException(String.format("Animaal %s is not supported",
+                throw new RuntimeException(String.format("Animal %s is not supported",
                                            animalTypeData.name().toLowerCase()));
             }
         }

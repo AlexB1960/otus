@@ -24,7 +24,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public List<AbsAnimal> findAll() {
         List<AbsAnimal> animals = new ArrayList<>();
-        try (ResultSet rs = MySqlConnector.getInstance().executeQuery("SELECT * FROM "
+        try (ResultSet rs = new MySqlConnector().executeQuery("SELECT * FROM "
                                                                          + tableName)) {
             while (rs.next()) {
                 long id = rs.getLong("id");
@@ -48,7 +48,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public AbsAnimal findById(Long searchId) {
         AbsAnimal animalFind = null;
-        try (ResultSet rs = MySqlConnector.getInstance().executeQuery("SELECT * FROM "
+        try (ResultSet rs = new MySqlConnector().executeQuery("SELECT * FROM "
                             + tableName + " WHERE id=" + searchId)) {
             while (rs.next()) {
                 long id = rs.getLong("id");
@@ -76,7 +76,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
                 + absAnimal.getType() + "', " + absAnimal.getAge() + ", " + absAnimal.getWeight()
                 + ", '" + absAnimal.getColor().name().toLowerCase() + "')";
         try {
-            MySqlConnector.getInstance().executeUpdate(sqlUpdate);
+            new MySqlConnector().executeUpdate(sqlUpdate);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -88,7 +88,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
                 + absAnimal.getWeight() + ", color='" + absAnimal.getColor().name().toLowerCase()
                 + "' WHERE id=" + absAnimal.getId();
         try {
-            MySqlConnector.getInstance().executeUpdate(sqlUpdate);
+            new MySqlConnector().executeUpdate(sqlUpdate);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -96,7 +96,7 @@ public class AnimalTable extends AbsTable implements IAnimalTable {
 
     public List<AbsAnimal> findFilter(String filterType) {
         List<AbsAnimal> animals = new ArrayList<>();
-        try (ResultSet rs = MySqlConnector.getInstance().executeQuery("SELECT * FROM "
+        try (ResultSet rs = new MySqlConnector().executeQuery("SELECT * FROM "
                             + tableName + " WHERE type='" + filterType + "'")) {
             while (rs.next()) {
                 long id = rs.getLong("id");

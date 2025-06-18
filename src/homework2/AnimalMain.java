@@ -18,11 +18,7 @@ public class AnimalMain {
     private static IntegerValidator integerValidator = new IntegerValidator();
 
     public static void main(String... args) {
-        List<AbsAnimal> animal = new ArrayList<>();
-        //AbsAnimal newAnimal = null;
-        //подключка к БД и загрузка данных в лист
         AnimalTable animalTable = new AnimalTable();
-        //animal = animalTable.findAll();
 
         List<String> menuNames = new ArrayList<>();
         for (MenuData menuData: MenuData.values()) {
@@ -44,8 +40,6 @@ public class AnimalMain {
                     animalTypeNames.add(animalTypeData.name().toLowerCase());
                 }
 
-                //String consoleAnimal = "";
-                //AnimalTypeData animalTypeCommand = null;
                 if (menuCommand.equals(MenuData.ADD)) {
                     String consoleAnimal = inputConsoleAnimal(animalTypeNames);
                     AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
@@ -66,7 +60,7 @@ public class AnimalMain {
                     newAnimal.say();
 
                 } else if (menuCommand.equals(MenuData.LIST)) {
-                    animal = animalTable.findAll();
+                    List<AbsAnimal> animal = animalTable.findAll();
                     for (AbsAnimal any: animal) {
                         System.out.println(any.toString());
                     }
@@ -80,8 +74,6 @@ public class AnimalMain {
                     if (editAnimal != null) {
                         System.out.println(editAnimal.toString());
 
-                        //String consoleAnimal = inputConsoleAnimal(animalTypeNames);
-                        //AnimalTypeData animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
                         editAnimal.setType(inputConsoleAnimal(animalTypeNames));
 
                         editAnimal.setName(inputConsoleName());
@@ -108,12 +100,11 @@ public class AnimalMain {
                     if (!animalTypeNames.contains(consoleAnimal)) {
                         System.out.println("Нет такого типа животного.");
                     } else {
-                        animal = animalTable.findFilter(consoleAnimal);
+                        List<AbsAnimal> animal = animalTable.findFilter(consoleAnimal);
                         for (AbsAnimal any: animal) {
                             System.out.println(any.toString());
                         }
                         System.out.println();
-                        //animalTypeCommand = AnimalTypeData.valueOf(consoleAnimal.toUpperCase());
                     }
 
                 } else if (menuCommand.equals(MenuData.EXIT)) {
@@ -123,7 +114,7 @@ public class AnimalMain {
         } while (menuCommand != MenuData.EXIT);
 
         try {
-            MySqlConnector.getInstance().close();
+            new MySqlConnector().close();
         } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }

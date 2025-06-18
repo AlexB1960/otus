@@ -16,23 +16,24 @@ public abstract class AbsTable {
     }
 
     public void create() {
-        String sqlRequest = String.format("CREATE TABLE IF NOT EXISTS %s (%s)", this.tableName, convertMapColumnsToString());
+        String sqlRequest = String.format("CREATE TABLE IF NOT EXISTS %s (%s)", this.tableName,
+                                                                  convertMapColumnsToString());
         try {
-            MySqlConnector.getInstance().execute(sqlRequest);
+            new MySqlConnector().execute(sqlRequest);
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private String convertMapColumnsToString() {
-        /*String result = "";
+        String result = "";
         for(Map.Entry<String, String> el : columns.entrySet()){
             result += el.getKey() + " " + el.getValue() + ",";
         }
         result = result.substring(0, result.length()-1);
-        return result;*/
-        return "id bigint PRIMARY KEY AUTO_INCREMENT, name varchar(15), type varchar(15), " +
-                "age int, weight int, color varchar(15)";
+        return result;
+        /*return "id bigint PRIMARY KEY AUTO_INCREMENT, name varchar(15), type varchar(15), " +
+                "age int, weight int, color varchar(15)";*/
     }
 
 }
