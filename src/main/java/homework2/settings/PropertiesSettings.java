@@ -14,7 +14,7 @@ public class PropertiesSettings implements ISettings {
         Properties settingsProperties = new Properties();
 
         String rootPath = System.getProperty("user.dir");
-        File propertyFile = new File(rootPath +"/src/homework2/resources/" + fileName);
+        File propertyFile = new File(rootPath +"/src/main/resources/" + fileName);
         settingsProperties.load(new FileInputStream(propertyFile));
 
         Map<String, String> settings = new HashMap<>();

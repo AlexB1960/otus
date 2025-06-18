@@ -1,5 +1,5 @@
 out/
 .idea/
 *.iml
-src/homework1/
+src/main/java/homework1/
 target/
