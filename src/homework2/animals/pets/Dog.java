@@ -4,8 +4,8 @@ import homework2.animals.AbsAnimal;
 import homework2.data.ColorData;
 
 public class Dog extends AbsAnimal {
-    public Dog(long id, String name, String type, int age, int weight, ColorData colorData) {
-        super(id, name, type, age, weight, colorData);
+    public Dog(String name, int age, int weight, ColorData colorData) {
+        super(name, age, weight, colorData);
     }
 
     @Override

@@ -3,17 +3,13 @@ package homework2.animals;
 import homework2.data.ColorData;
 
 public abstract class AbsAnimal {
-    private long id;
     private String name;
-    private String type;
     private int age;
     private int weight;
     private ColorData color;
 
-    public AbsAnimal(long id, String name, String type, int age, int weight, ColorData colorData) {
-        this.id = id;
+    public AbsAnimal(String name, int age, int weight, ColorData colorData) {
         this.name = name;
-        this.type = type;
         this.age = age;
         this.weight = weight;
         this.color = colorData;
@@ -21,10 +17,6 @@ public abstract class AbsAnimal {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void setAge(int age) {
@@ -39,16 +31,8 @@ public abstract class AbsAnimal {
         this.color = color;
     }
 
-    public Long getId() {
-        return this.id;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public String getType() {
-        return this.type;
     }
 
     public int getAge() {
@@ -81,9 +65,8 @@ public abstract class AbsAnimal {
 
     @Override
     public String toString() {
-        return String.format("ID=%s %s Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
-                this.id, this.type, this.name, this.age, ageString(this.age), this.weight,
-                this.color.getName().toLowerCase());
+        return String.format("Привет! Меня зовут %s, мне %d %s, я вешу - %d кг, мой цвет - %s.",
+                this.name, this.age, ageString(this.age), this.weight, this.color.getName().toLowerCase());
     }
 
     public String ageString(int age) {
