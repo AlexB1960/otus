@@ -13,7 +13,7 @@ public class MySqlConnector implements IDBConnector {
     private static Statement statement = null;
 
     public MySqlConnector() throws SQLException, IOException {
-        dbSettings = new PropertiesSettings().getSettings("DBSettings.properties");
+        dbSettings = new PropertiesSettings("DBSettings.properties").getSettings();
         connect();
     }
 
